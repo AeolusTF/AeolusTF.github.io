@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="BurpFakeIP burpsuite伪造ip,我是认真的。   Github传送门：https:&#x2F;&#x2F;github.com&#x2F;AeolusTF&#x2F;BurpFakeIP.git 四个小功能 伪造指定ip 伪造本地ip 伪造随机ip 随机ip爆破  0x01 伪造指定ip在Repeater模块右键选择fakeIp菜单,然后点击inputIP功能,然后输入指定的ip：   程序会自动添加所有可伪造得字段到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BurpSuite伪造IP-BurpFaleIP">
+<meta property="og:url" content="http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/index.html">
+<meta property="og:site_name" content="Ae0lu5">
+<meta property="og:description" content="BurpFakeIP burpsuite伪造ip,我是认真的。   Github传送门：https:&#x2F;&#x2F;github.com&#x2F;AeolusTF&#x2F;BurpFakeIP.git 四个小功能 伪造指定ip 伪造本地ip 伪造随机ip 随机ip爆破  0x01 伪造指定ip在Repeater模块右键选择fakeIp菜单,然后点击inputIP功能,然后输入指定的ip：   程序会自动添加所有可伪造得字段到">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597179485863.png">
+<meta property="og:image" content="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597184839805.png">
+<meta property="og:image" content="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597185444300.png">
+<meta property="og:image" content="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597186627939.png">
+<meta property="og:image" content="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597187304576.png">
+<meta property="og:image" content="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597190596991.png">
+<meta property="og:image" content="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597191239161.png">
+<meta property="og:image" content="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597192426317.png">
+<meta property="og:image" content="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597193222287.png">
+<meta property="article:published_time" content="2021-02-08T05:27:51.000Z">
+<meta property="article:modified_time" content="2021-02-08T10:28:10.631Z">
+<meta property="article:author" content="Ae0lu5">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597179485863.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>BurpSuite伪造IP-BurpFaleIP</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/AeolusTF">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2021/02/08/Sn1per-%E4%B8%BA%E6%94%BB%E5%87%BB%E6%80%A7%E5%AE%89%E5%85%A8%E4%B8%93%E5%AE%B6%E6%8F%90%E4%BE%9B%E8%87%AA%E5%8A%A8%E7%AC%94%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2021/02/08/Microsoft-IIS-Internet%E4%BF%A1%E6%81%AF%E6%9C%8D%E5%8A%A1-%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%90%8E%E9%97%A8%E6%A8%A1%E5%9D%97/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&text=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&title=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&is_video=false&description=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=BurpSuite伪造IP-BurpFaleIP&body=Check out this article: http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&title=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&title=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&title=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&title=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&name=BurpSuite伪造IP-BurpFaleIP&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&t=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BurpFakeIP"><span class="toc-number">1.</span> <span class="toc-text">BurpFakeIP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E5%B0%8F%E5%8A%9F%E8%83%BD"><span class="toc-number">1.1.</span> <span class="toc-text">四个小功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x01-%E4%BC%AA%E9%80%A0%E6%8C%87%E5%AE%9Aip"><span class="toc-number">1.2.</span> <span class="toc-text">0x01 伪造指定ip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x02-%E4%BC%AA%E9%80%A0%E6%9C%AC%E5%9C%B0ip"><span class="toc-number">1.3.</span> <span class="toc-text">0x02 伪造本地ip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x03-%E4%BC%AA%E9%80%A0%E9%9A%8F%E6%9C%BAip"><span class="toc-number">1.4.</span> <span class="toc-text">0x03 伪造随机ip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x04-%E9%9A%8F%E6%9C%BAip%E7%88%86%E7%A0%B4"><span class="toc-number">1.5.</span> <span class="toc-text">0x04 随机ip爆破</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        BurpSuite伪造IP-BurpFaleIP
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Ae0lu5</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-02-08T05:27:51.000Z" itemprop="datePublished">2021-02-08</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="BurpFakeIP"><a href="#BurpFakeIP" class="headerlink" title="BurpFakeIP"></a>BurpFakeIP</h2><blockquote>
+<p>burpsuite伪造ip,我是认真的。</p>
+</blockquote>
+<p><img src="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597179485863.png"></p>
+<p>Github传送门：<a target="_blank" rel="noopener" href="https://github.com/AeolusTF/BurpFakeIP.git">https://github.com/AeolusTF/BurpFakeIP.git</a></p>
+<h3 id="四个小功能"><a href="#四个小功能" class="headerlink" title="四个小功能"></a>四个小功能</h3><ul>
+<li>伪造指定ip</li>
+<li>伪造本地ip</li>
+<li>伪造随机ip</li>
+<li>随机ip爆破</li>
+</ul>
+<h3 id="0x01-伪造指定ip"><a href="#0x01-伪造指定ip" class="headerlink" title="0x01 伪造指定ip"></a>0x01 伪造指定ip</h3><p>在<code>Repeater</code>模块右键选择<code>fakeIp</code>菜单,然后点击<code>inputIP</code>功能,然后输入指定的ip：</p>
+<p><img src="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597184839805.png"></p>
+<p><img src="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597185444300.png"></p>
+<p>程序会自动添加所有可伪造得字段到请求头中。</p>
+<h3 id="0x02-伪造本地ip"><a href="#0x02-伪造本地ip" class="headerlink" title="0x02 伪造本地ip"></a>0x02 伪造本地ip</h3><p>在<code>Repeater</code>模块右键选择<code>fakeIp</code>菜单,然后点击<code>127.0.0.1</code>功能：</p>
+<p><img src="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597186627939.png"></p>
+<h3 id="0x03-伪造随机ip"><a href="#0x03-伪造随机ip" class="headerlink" title="0x03 伪造随机ip"></a>0x03 伪造随机ip</h3><p>在<code>Repeater</code>模块右键选择<code>fakeIp</code>菜单,然后点击<code>randomIP</code>功能：</p>
+<p><img src="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597187304576.png"></p>
+<h3 id="0x04-随机ip爆破"><a href="#0x04-随机ip爆破" class="headerlink" title="0x04 随机ip爆破"></a>0x04 随机ip爆破</h3><p><strong>伪造随机ip爆破是本插件最核心的功能。</strong></p>
+<p>将数据包发送到<code>Intruder</code>模块,在<code>Positions</code>中切换<code>Attack type</code>为<code>Pitchfork</code>模式,选择好有效的伪造字段,以及需要爆破的字段:</p>
+<p><img src="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597190596991.png"></p>
+<p>按照箭头顺序将Payload来源设置为<code>Extensin-generated</code>,并设置负载伪<code>fakeIpPayloads</code>,然后设置第二个变量。<br><img src="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597191239161.png"></p>
+<p><img src="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597192426317.png"></p>
+<p>点击<code>Start attack</code>开始爆破.</p>
+<p><img src="https://github.com/AeolusTF/BurpFakeIP/raw/master/images/15597193222287.png"></p>
+<p>如上图,实现每次爆破都使用不同的伪ip进行,避免被ban。</p>
+<blockquote>
+<p>PS：伪造随机ip爆破的先决条件可以伪造ip绕过服务器限制。</p>
+</blockquote>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/AeolusTF">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BurpFakeIP"><span class="toc-number">1.</span> <span class="toc-text">BurpFakeIP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E5%B0%8F%E5%8A%9F%E8%83%BD"><span class="toc-number">1.1.</span> <span class="toc-text">四个小功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x01-%E4%BC%AA%E9%80%A0%E6%8C%87%E5%AE%9Aip"><span class="toc-number">1.2.</span> <span class="toc-text">0x01 伪造指定ip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x02-%E4%BC%AA%E9%80%A0%E6%9C%AC%E5%9C%B0ip"><span class="toc-number">1.3.</span> <span class="toc-text">0x02 伪造本地ip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x03-%E4%BC%AA%E9%80%A0%E9%9A%8F%E6%9C%BAip"><span class="toc-number">1.4.</span> <span class="toc-text">0x03 伪造随机ip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x04-%E9%9A%8F%E6%9C%BAip%E7%88%86%E7%A0%B4"><span class="toc-number">1.5.</span> <span class="toc-text">0x04 随机ip爆破</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&text=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&title=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&is_video=false&description=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=BurpSuite伪造IP-BurpFaleIP&body=Check out this article: http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&title=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&title=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&title=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&title=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&name=BurpSuite伪造IP-BurpFaleIP&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aeolustf.github.io/2021/02/08/BurpSuite%E4%BC%AA%E9%80%A0IP-BurpFaleIP/&t=BurpSuite伪造IP-BurpFaleIP"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    Ae0lu5
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/AeolusTF">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
