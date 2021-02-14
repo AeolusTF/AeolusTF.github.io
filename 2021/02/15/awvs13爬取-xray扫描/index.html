@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="部署情况 AWVS13 docker版AWVS13部署在VM的虚拟机kali内，网络连接模式host https:&#x2F;&#x2F;hub.docker.com&#x2F;r&#x2F;secfa&#x2F;docker-awvs docker run -it -d --network&#x3D;host secfa&#x2F;docker-awvs xray xray部署在腾讯云学生机，监听0.0.0.0:端口  使用添加target时设置好代理，让awvs">
+    <meta name="description" content="部署情况 AWVS13 docker版AWVS13部署在VM的虚拟机kali内，网络连接模式host https:&#x2F;&#x2F;hub.docker.com&#x2F;r&#x2F;secfa&#x2F;docker-awvs   1docker run -it -d --network&#x3D;host secfa&#x2F;docker-awvs xray xray部署在腾讯云学生机，监听0.0.0.0:端口  使用添加targe">
 <meta property="og:type" content="article">
 <meta property="og:title" content="awvs13爬取+xray扫描">
 <meta property="og:url" content="http://aeolustf.github.io/2021/02/15/awvs13%E7%88%AC%E5%8F%96-xray%E6%89%AB%E6%8F%8F/index.html">
 <meta property="og:site_name" content="Ae0lu5">
-<meta property="og:description" content="部署情况 AWVS13 docker版AWVS13部署在VM的虚拟机kali内，网络连接模式host https:&#x2F;&#x2F;hub.docker.com&#x2F;r&#x2F;secfa&#x2F;docker-awvs docker run -it -d --network&#x3D;host secfa&#x2F;docker-awvs xray xray部署在腾讯云学生机，监听0.0.0.0:端口  使用添加target时设置好代理，让awvs">
+<meta property="og:description" content="部署情况 AWVS13 docker版AWVS13部署在VM的虚拟机kali内，网络连接模式host https:&#x2F;&#x2F;hub.docker.com&#x2F;r&#x2F;secfa&#x2F;docker-awvs   1docker run -it -d --network&#x3D;host secfa&#x2F;docker-awvs xray xray部署在腾讯云学生机，监听0.0.0.0:端口  使用添加targe">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://aeolustf.github.io/images/awvs13%E7%88%AC%E5%8F%96+xray%E6%89%AB%E6%8F%8F/0.png">
 <meta property="og:image" content="http://aeolustf.github.io/images/awvs13%E7%88%AC%E5%8F%96+xray%E6%89%AB%E6%8F%8F/1.png">
 <meta property="og:image" content="http://aeolustf.github.io/images/awvs13%E7%88%AC%E5%8F%96+xray%E6%89%AB%E6%8F%8F/2.png">
 <meta property="article:published_time" content="2021-02-14T18:51:58.000Z">
-<meta property="article:modified_time" content="2021-02-14T18:54:44.348Z">
+<meta property="article:modified_time" content="2021-02-14T19:11:25.604Z">
 <meta property="article:author" content="Ae0lu5">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://aeolustf.github.io/images/awvs13%E7%88%AC%E5%8F%96+xray%E6%89%AB%E6%8F%8F/0.png">
@@ -79,6 +79,8 @@
     <br/>
     <span id="actions">
       <ul>
+        
+        <li><a class="icon" href="/2021/02/15/PHP%E6%95%B0%E6%8D%AE%E5%BA%93-Mysql/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2021/02/15/sqlmap-os-shell%E6%8E%A2%E7%B4%A2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -149,7 +151,7 @@
 
   <div class="content" itemprop="articleBody">
     <h1 id="部署情况"><a href="#部署情况" class="headerlink" title="部署情况"></a>部署情况</h1><ol>
-<li>AWVS13<br> docker版AWVS13部署在VM的虚拟机kali内，网络连接模式host<br> <a target="_blank" rel="noopener" href="https://hub.docker.com/r/secfa/docker-awvs">https://hub.docker.com/r/secfa/docker-awvs</a><br> <code>docker run -it -d --network=host secfa/docker-awvs</code></li>
+<li>AWVS13<br> docker版AWVS13部署在VM的虚拟机kali内，网络连接模式host<br> <a target="_blank" rel="noopener" href="https://hub.docker.com/r/secfa/docker-awvs">https://hub.docker.com/r/secfa/docker-awvs</a>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -d --network&#x3D;host secfa&#x2F;docker-awvs</span><br></pre></td></tr></table></figure></li>
 <li>xray<br> xray部署在腾讯云学生机，监听<code>0.0.0.0:端口</code></li>
 </ol>
 <h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>添加target时设置好代理，让awvs13流量导向xray，注意保存设置<br><img src="/images/awvs13%E7%88%AC%E5%8F%96+xray%E6%89%AB%E6%8F%8F/0.png"></p>

