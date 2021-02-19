@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="kerberos认证过程client向kerberos服务请求，希望获取访问server的权限。kerberos得到了这个消息，首先得判断client是否是可信赖的，也就是白名单黑名单的说法。这就是AS服务完成的工作，通过在AD中存储黑名单和白名单来区分client。成功后，返回TGT给client。client得到了TGT后，继续向kerberos请求，希望获取访问server的权限。kerbe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kerberos协议介绍">
+<meta property="og:url" content="http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="Ae0lu5">
+<meta property="og:description" content="kerberos认证过程client向kerberos服务请求，希望获取访问server的权限。kerberos得到了这个消息，首先得判断client是否是可信赖的，也就是白名单黑名单的说法。这就是AS服务完成的工作，通过在AD中存储黑名单和白名单来区分client。成功后，返回TGT给client。client得到了TGT后，继续向kerberos请求，希望获取访问server的权限。kerbe">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/0.png">
+<meta property="article:published_time" content="2021-02-19T17:41:28.000Z">
+<meta property="article:modified_time" content="2021-02-19T17:54:50.793Z">
+<meta property="article:author" content="Ae0lu5">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/0.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>kerberos协议介绍</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/AeolusTF">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2021/02/20/Pass-The-Ticket%E4%B9%8B%E9%BB%84%E9%87%91%E7%A5%A8%E6%8D%AE/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2021/02/19/infoscaner-%E8%87%AA%E5%8A%A8%E5%8C%96%E9%9B%86%E6%88%90%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B7%A5%E5%85%B7/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&text=kerberos协议介绍"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&title=kerberos协议介绍"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&is_video=false&description=kerberos协议介绍"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=kerberos协议介绍&body=Check out this article: http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&title=kerberos协议介绍"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&title=kerberos协议介绍"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&title=kerberos协议介绍"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&title=kerberos协议介绍"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&name=kerberos协议介绍&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&t=kerberos协议介绍"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#kerberos%E8%AE%A4%E8%AF%81%E8%BF%87%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">kerberos认证过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E4%BD%9C%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">服务作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4%E8%AF%A6%E8%A7%A3"><span class="toc-number">3.</span> <span class="toc-text">步骤详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-number">4.</span> <span class="toc-text">注意</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        kerberos协议介绍
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Ae0lu5</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-02-19T17:41:28.000Z" itemprop="datePublished">2021-02-20</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="kerberos认证过程"><a href="#kerberos认证过程" class="headerlink" title="kerberos认证过程"></a>kerberos认证过程</h2><p>client向kerberos服务请求，希望获取访问server的权限。kerberos得到了这个消息，首先得判断client是否是可信赖的，也就是白名单黑名单的说法。这就是AS服务完成的工作，通过在AD中存储黑名单和白名单来区分client。成功后，返回TGT给client。client得到了TGT后，继续向kerberos请求，希望获取访问server的权限。kerberos又得到了这个消息，这时候通过client消息中的TGT，判断出了client拥有了这个权限，给了client访问server的权限ticket。 client得到ticket后，终于可以成功访问server。这个ticket只是针对这个server，其他server需要向TGS申请。 </p>
+<p> <img src="/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/0.png"> </p>
+<h2 id="服务作用"><a href="#服务作用" class="headerlink" title="服务作用"></a>服务作用</h2><p>KDC(key distributed center)<br>作用：整个安全认证过程的票据生成管理服务，其中包含两个服务，AS和TGS</p>
+<p>AS(authentication service)<br>作用：为client生成TGT的服务</p>
+<p>TGS(ticket granting service)<br>作用：为client生成某个服务的ticket</p>
+<p>AD(account database)<br>作用：存储所有client的白名单，只有存在于白名单的client才能顺利申请到TGT</p>
+<p>TGT(ticket-granting ticket)<br>作用：用于获取ticket的票据</p>
+<p>client<br>想访问某个server的客户端</p>
+<p>server<br>提供某种业务的服务</p>
+<h2 id="步骤详解"><a href="#步骤详解" class="headerlink" title="步骤详解"></a>步骤详解</h2><p>（AS-REQ）Client 发送用户名 Tom 到 KDC （Key Distribution Center）以向 AS （Authentication Service）请求 TGT 票据等信息。</p>
+<p>（AS-REP）收到请求后，AS 生成随机字符串 Session Key，使用 Tom 的 NTLM Hash 对 Session Key 加密得到密文 A，再使用账号 krbtgt 的 NTLM Hash 对 Session Key 、 Client Info和 timestamp 加密得到 TGT，A 和 TGT 一起返回给 Client。</p>
+<p>（TGS-REQ） Client 收到请求后，使用自身的 NTLM Hash 解密 A 就能得到 Session Key，然后使用 Session Key 对 Client Info 和 timestamp 加密得到 B，加上 TGT ，发送给 KDC中的 TGS。</p>
+<p>（TGS-REP）TGS 收到请求后，使用 krbtgt 的 NTLM Hash 解密 TGT，得到 Session Key 和 timestamp 以及 Client Info，同时，使用 TGT 解密出的 Session Key 解密密文B，得到Client Info 和 timestamp。 比对这两部分解密得到的内容以验证是否通过。通过后，生成一个新的随机数 Server（Session Key2），并用它加密 client info 和 timestamp 得到密文 enc-part；使用服务器计算机的NTLM Hash 对 Server（session key2） 和 client info 以及 timestamp 加密得到最终的 Ticket，返回给 Client。</p>
+<p>（AP-REQ）Client 使用 Ticket 和 enc-part 直接请求某服务。</p>
+<p>（AP-REP） 对Ticket 和 enc-part 解密后进行验证授权。</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><ul>
+<li>Kerberos 协议设计的思路就是用来在不受信的环境下进行认证的协议。</li>
+<li>krbtgt 账号的 NTLM Hash 理论上只存在于 KDC 中。这意味着 TGT 只能由 KDC 来解密。如果krbtgt 账号的NTLM Hash泄露了，那么 TGT 就能被解密甚至伪造。伪造的 TGT 叫做黄金票据。</li>
+<li>Ticket 是由服务器计算机本身的 NTLM Hash 加密的，Client 不能解密。如果该Hash 泄露，那么就可以解密甚至伪造 Ticket。伪造的 Ticket 叫做白银票据。</li>
+<li>在上述的流程中，涉及到时间戳 timestamp，由于它的存在，才使得被第三方获取了加密信息 A 、B、TGT不会在短时间内被暴力破解。timestamp 一般时间为8小时。</li>
+<li>Kerberos 协议和 NTLM 协议都会使用 NTLM Hash 对生成的任意随机数加密，然后比对结果。 Kerberos 的主要区别在于添加了第三方——-KDC参与到认证过程中。</li>
+<li>Client info 中包含域名信息、Client 名称等</li>
+</ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/lovebomei/article/details/79814979">https://blog.csdn.net/lovebomei/article/details/79814979</a></p>
+<p> <a target="_blank" rel="noopener" href="https://green-m.me/2019/01/24/play-with-kerberos/">https://green-m.me/2019/01/24/play-with-kerberos/</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/AeolusTF">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#kerberos%E8%AE%A4%E8%AF%81%E8%BF%87%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">kerberos认证过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E4%BD%9C%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">服务作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4%E8%AF%A6%E8%A7%A3"><span class="toc-number">3.</span> <span class="toc-text">步骤详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-number">4.</span> <span class="toc-text">注意</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&text=kerberos协议介绍"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&title=kerberos协议介绍"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&is_video=false&description=kerberos协议介绍"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=kerberos协议介绍&body=Check out this article: http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&title=kerberos协议介绍"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&title=kerberos协议介绍"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&title=kerberos协议介绍"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&title=kerberos协议介绍"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&name=kerberos协议介绍&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aeolustf.github.io/2021/02/20/kerberos%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/&t=kerberos协议介绍"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    Ae0lu5
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/AeolusTF">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
