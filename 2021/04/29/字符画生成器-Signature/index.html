@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="介绍此项目移植于网页版字符画生成器，最初是为了方便公众号生成图文素材的封面图片。移植到Linux下后，不仅可以更方便生成字符画，也可应用于linux命令行模式下，使其文字提示更加醒目美观。 文件说明signature.sh此文件为工具主程序，实现了查询当前可用字体，根据参数生成目标字符画的功能。  目前支持对大小写英文字母和数字转化，暂不支持特殊字符 脚本内自带一种默认字符画，其他字符画依赖于相同">
+    <meta name="description" content="SignatureGithub传送门：https:&#x2F;&#x2F;github.com&#x2F;AeolusTF&#x2F;signature.git 介绍此项目移植于网页版字符画生成器，最初是为了方便公众号生成图文素材的封面图片。移植到Linux下后，不仅可以更方便生成字符画，也可应用于linux命令行模式下，使其文字提示更加醒目美观。 文件说明signature.sh此文件为工具主程序，实现了查询当前可用字体，根据参数生成">
 <meta property="og:type" content="article">
 <meta property="og:title" content="字符画生成器 - Signature">
 <meta property="og:url" content="http://aeolustf.github.io/2021/04/29/%E5%AD%97%E7%AC%A6%E7%94%BB%E7%94%9F%E6%88%90%E5%99%A8-Signature/index.html">
 <meta property="og:site_name" content="Ae0lu5">
-<meta property="og:description" content="介绍此项目移植于网页版字符画生成器，最初是为了方便公众号生成图文素材的封面图片。移植到Linux下后，不仅可以更方便生成字符画，也可应用于linux命令行模式下，使其文字提示更加醒目美观。 文件说明signature.sh此文件为工具主程序，实现了查询当前可用字体，根据参数生成目标字符画的功能。  目前支持对大小写英文字母和数字转化，暂不支持特殊字符 脚本内自带一种默认字符画，其他字符画依赖于相同">
+<meta property="og:description" content="SignatureGithub传送门：https:&#x2F;&#x2F;github.com&#x2F;AeolusTF&#x2F;signature.git 介绍此项目移植于网页版字符画生成器，最初是为了方便公众号生成图文素材的封面图片。移植到Linux下后，不仅可以更方便生成字符画，也可应用于linux命令行模式下，使其文字提示更加醒目美观。 文件说明signature.sh此文件为工具主程序，实现了查询当前可用字体，根据参数生成">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-04-29T00:38:28.000Z">
-<meta property="article:modified_time" content="2021-04-29T00:39:08.268Z">
+<meta property="article:modified_time" content="2021-04-29T01:37:09.417Z">
 <meta property="article:author" content="Ae0lu5">
 <meta name="twitter:card" content="summary">
     
@@ -105,7 +105,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="toc-number">2.</span> <span class="toc-text">文件说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#signature-sh"><span class="toc-number">2.1.</span> <span class="toc-text">signature.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#font-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">2.2.</span> <span class="toc-text">font 文件夹</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Signature"><span class="toc-number">1.</span> <span class="toc-text">Signature</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="toc-number">3.</span> <span class="toc-text">文件说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#signature-sh"><span class="toc-number">3.1.</span> <span class="toc-text">signature.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#font-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">3.2.</span> <span class="toc-text">font 文件夹</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -144,7 +144,8 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>此项目移植于网页版字符画生成器，最初是为了方便公众号生成图文素材的封面图片。移植到Linux下后，不仅可以更方便生成字符画，也可应用于linux命令行模式下，使其文字提示更加醒目美观。</p>
+    <h3 id="Signature"><a href="#Signature" class="headerlink" title="Signature"></a>Signature</h3><p>Github传送门：<a target="_blank" rel="noopener" href="https://github.com/AeolusTF/signature.git">https://github.com/AeolusTF/signature.git</a></p>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>此项目移植于网页版字符画生成器，最初是为了方便公众号生成图文素材的封面图片。移植到Linux下后，不仅可以更方便生成字符画，也可应用于linux命令行模式下，使其文字提示更加醒目美观。</p>
 <h3 id="文件说明"><a href="#文件说明" class="headerlink" title="文件说明"></a>文件说明</h3><h4 id="signature-sh"><a href="#signature-sh" class="headerlink" title="signature.sh"></a>signature.sh</h4><p>此文件为工具主程序，实现了查询当前可用字体，根据参数生成目标字符画的功能。</p>
 <ul>
 <li>目前支持对大小写英文字母和数字转化，暂不支持特殊字符</li>
@@ -182,7 +183,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="toc-number">2.</span> <span class="toc-text">文件说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#signature-sh"><span class="toc-number">2.1.</span> <span class="toc-text">signature.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#font-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">2.2.</span> <span class="toc-text">font 文件夹</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Signature"><span class="toc-number">1.</span> <span class="toc-text">Signature</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="toc-number">3.</span> <span class="toc-text">文件说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#signature-sh"><span class="toc-number">3.1.</span> <span class="toc-text">signature.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#font-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">3.2.</span> <span class="toc-text">font 文件夹</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
