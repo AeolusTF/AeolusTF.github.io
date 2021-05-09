@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Chrome-0day ShellCode 传送门 Chrome-0day 漏洞介绍Google Chrome是由Google开发的免费网页浏览器。经测试，此漏洞影响 Chrome 最新正式版（89.0.4389.128）以及基于Chromium内核的Microsoft Edge正式版（89.0.774.76）。攻击者可通过构造特制web页面并诱导受害者访问来利用此漏洞获得远程代码执行。 Chr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cobalt Strike 利用 Chrome-0day 上线">
+<meta property="og:url" content="http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/index.html">
+<meta property="og:site_name" content="Ae0lu5">
+<meta property="og:description" content="Chrome-0day ShellCode 传送门 Chrome-0day 漏洞介绍Google Chrome是由Google开发的免费网页浏览器。经测试，此漏洞影响 Chrome 最新正式版（89.0.4389.128）以及基于Chromium内核的Microsoft Edge正式版（89.0.774.76）。攻击者可通过构造特制web页面并诱导受害者访问来利用此漏洞获得远程代码执行。 Chr">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/0.png">
+<meta property="og:image" content="http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/1.png">
+<meta property="og:image" content="http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/2.png">
+<meta property="og:image" content="http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/3.png">
+<meta property="og:image" content="http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/4.png">
+<meta property="og:image" content="http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/5.png">
+<meta property="og:image" content="http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/6.png">
+<meta property="article:published_time" content="2021-05-09T02:34:14.000Z">
+<meta property="article:modified_time" content="2021-05-09T02:43:05.299Z">
+<meta property="article:author" content="Ae0lu5">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/0.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Cobalt Strike 利用 Chrome-0day 上线</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/AeolusTF">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/04/29/%E5%AD%97%E7%AC%A6%E7%94%BB%E7%94%9F%E6%88%90%E5%99%A8-Signature/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&text=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&title=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&is_video=false&description=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cobalt Strike 利用 Chrome-0day 上线&body=Check out this article: http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&title=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&title=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&title=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&title=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&name=Cobalt Strike 利用 Chrome-0day 上线&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&t=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chrome-0day-ShellCode-%E4%BC%A0%E9%80%81%E9%97%A8"><span class="toc-number">1.</span> <span class="toc-text">Chrome-0day ShellCode 传送门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chrome-0day-%E6%BC%8F%E6%B4%9E%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">Chrome-0day 漏洞介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4"><span class="toc-number">3.</span> <span class="toc-text">影响范围</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF-Cobalt-Strike"><span class="toc-number">4.</span> <span class="toc-text">利用 Chrome-0day 上线 Cobalt Strike</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%A6%96%E5%85%88%E5%B0%9D%E8%AF%95%E5%BC%B9%E5%87%BA%E8%AE%B0%E4%BA%8B%E6%9C%AC%EF%BC%8C%E6%88%90%E5%8A%9F%E8%AF%B4%E6%98%8E%E5%AD%98%E5%9C%A8%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">1.首先尝试弹出记事本，成功说明存在漏洞利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-CS%E5%BC%80%E5%90%AF%E7%9B%91%E5%90%AC"><span class="toc-number">6.</span> <span class="toc-text">2.CS开启监听</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1%E7%94%9F%E6%88%90pyload%EF%BC%8Chttps%E7%9A%84%E7%A8%B3%E5%AE%9A%EF%BC%8C%E5%8B%BE%E9%80%89x64"><span class="toc-number">6.1.</span> <span class="toc-text">2.1生成pyload，https的稳定，勾选x64</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2%E7%94%9F%E6%88%90%E4%B9%8B%E5%90%8E%E8%8E%B7%E5%BE%97pyload-c"><span class="toc-number">6.2.</span> <span class="toc-text">2.2生成之后获得pyload.c</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3%E5%B0%86shellcode%E7%9A%84-%E5%85%A8%E9%83%A8%E6%9B%BF%E6%8D%A2%E4%B8%BA-0-%E7%84%B6%E5%90%8E%E5%8F%96%E5%87%BA%E6%9D%A5shellcode-%E6%94%BE%E5%85%A5-chrome-0day-%E4%B8%AD"><span class="toc-number">6.3.</span> <span class="toc-text">2.3将shellcode的&#96;\&#96;全部替换为&#96;,0&#96;然后取出来shellcode  放入 chrome 0day 中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4%E5%A4%8D%E5%88%B6%E5%87%BA%E6%9D%A5-%E6%94%BE%E5%85%A5-POC-%E4%B8%AD-%E7%AC%AC7%E8%A1%8C-%E7%BB%99shellcode-%E8%B5%8B%E5%80%BC%E6%95%B0%E7%BB%84%EF%BC%8C%E4%BF%9D%E5%AD%98-%E6%88%90-chrome-html"><span class="toc-number">6.4.</span> <span class="toc-text">2.4复制出来 放入 POC 中 第7行 给shellcode  赋值数组，保存 成 chrome.html</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5%E6%89%A7%E8%A1%8C%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%EF%BC%8C%E5%85%B3%E9%97%AD%E6%B2%99%E7%AE%B1%E5%B9%B6%E6%89%93%E5%BC%80%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="toc-number">6.5.</span> <span class="toc-text">2.5执行以下命令，关闭沙箱并打开谷歌浏览器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6%E7%84%B6%E5%90%8E%E5%8F%8C%E5%87%BB%E6%89%93%E5%BC%80chrome-html%EF%BC%8Ccs%E6%88%90%E5%8A%9F%E4%B8%8A%E7%BA%BF"><span class="toc-number">6.6.</span> <span class="toc-text">2.6然后双击打开chrome.html，cs成功上线</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%EF%BC%9A%E6%9C%AC%E5%AE%9E%E9%AA%8C%E4%B8%8D%E5%BE%97%E7%94%A8%E4%BA%8E%E5%95%86%E4%B8%9A%E7%94%A8%E9%80%94-%E4%BB%85%E5%81%9A%E5%AD%A6%E4%B9%A0%E4%BA%A4%E6%B5%81%EF%BC%8C%E5%A6%82%E7%94%A8%E4%BD%9C%E4%BB%96%E9%80%94%E9%80%A0%E6%88%90%E7%9A%84%E4%B8%80%E5%88%87%E5%90%8E%E6%9E%9C%E8%AF%B7%E8%87%AA%E8%A1%8C%E6%89%BF%E6%8B%85"><span class="toc-number">7.</span> <span class="toc-text">注：本实验不得用于商业用途,仅做学习交流，如用作他途造成的一切后果请自行承担!</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Cobalt Strike 利用 Chrome-0day 上线
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Ae0lu5</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-05-09T02:34:14.000Z" itemprop="datePublished">2021-05-09</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <hr>
+<h2 id="Chrome-0day-ShellCode-传送门"><a href="#Chrome-0day-ShellCode-传送门" class="headerlink" title="Chrome-0day ShellCode 传送门"></a><a target="_blank" rel="noopener" href="https://github.com/AeolusTF/chrome-0day.git">Chrome-0day ShellCode 传送门</a></h2><hr>
+<h2 id="Chrome-0day-漏洞介绍"><a href="#Chrome-0day-漏洞介绍" class="headerlink" title="Chrome-0day 漏洞介绍"></a>Chrome-0day 漏洞介绍</h2><p>Google Chrome是由Google开发的免费网页浏览器。经测试，此漏洞影响 Chrome 最新正式版（89.0.4389.128）以及基于Chromium内核的Microsoft Edge正式版（89.0.774.76）。攻击者可通过构造特制web页面并诱导受害者访问来利用此漏洞获得远程代码执行。</p>
+<p>Chrome一直是很多用户使用的浏览器，最新出来了一个Chrome 0Day ，然后我这边已经成功复现，配合这个0day，可以执行任意命令，不过前提条件是需要chrome开启–no-sandbox无沙盒模式，我们可以生成一个链接让受害者点击直接上线Cobalt Strike。</p>
+<h2 id="影响范围"><a href="#影响范围" class="headerlink" title="影响范围"></a>影响范围</h2><p>Google Chrome &lt;= 89.0.4389.128</p>
+<p>基于Chromium内核的Microsoft Edge &lt;= 89.0.774.76</p>
+<p>其他基于V8引擎的浏览器</p>
+<p>目前90.0.4430.72 (正式版本)也受影响。</p>
+<p>但最新版90.0.4430.85 (正式版本)不受影响。</p>
+<p>目前测试32位Chrome所有版本都不受影响。</p>
+<h2 id="利用-Chrome-0day-上线-Cobalt-Strike"><a href="#利用-Chrome-0day-上线-Cobalt-Strike" class="headerlink" title="利用 Chrome-0day 上线 Cobalt Strike"></a>利用 Chrome-0day 上线 Cobalt Strike</h2><h2 id="1-首先尝试弹出记事本，成功说明存在漏洞利用"><a href="#1-首先尝试弹出记事本，成功说明存在漏洞利用" class="headerlink" title="1.首先尝试弹出记事本，成功说明存在漏洞利用"></a>1.首先尝试弹出记事本，成功说明存在漏洞利用</h2><p><img src="/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/0.png"></p>
+<h2 id="2-CS开启监听"><a href="#2-CS开启监听" class="headerlink" title="2.CS开启监听"></a>2.CS开启监听</h2><h3 id="2-1生成pyload，https的稳定，勾选x64"><a href="#2-1生成pyload，https的稳定，勾选x64" class="headerlink" title="2.1生成pyload，https的稳定，勾选x64"></a>2.1生成pyload，https的稳定，勾选x64</h3><p><img src="/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/1.png">  </p>
+<h3 id="2-2生成之后获得pyload-c"><a href="#2-2生成之后获得pyload-c" class="headerlink" title="2.2生成之后获得pyload.c"></a>2.2生成之后获得pyload.c</h3><p><img src="/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/2.png">  </p>
+<h3 id="2-3将shellcode的-全部替换为-0-然后取出来shellcode-放入-chrome-0day-中"><a href="#2-3将shellcode的-全部替换为-0-然后取出来shellcode-放入-chrome-0day-中" class="headerlink" title="2.3将shellcode的`\`全部替换为`,0`然后取出来shellcode  放入 chrome 0day 中"></a>2.3将shellcode的`\`全部替换为`,0`然后取出来shellcode  放入 chrome 0day 中</h3><p><img src="/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/3.png">  </p>
+<h3 id="2-4复制出来-放入-POC-中-第7行-给shellcode-赋值数组，保存-成-chrome-html"><a href="#2-4复制出来-放入-POC-中-第7行-给shellcode-赋值数组，保存-成-chrome-html" class="headerlink" title="2.4复制出来 放入 POC 中 第7行 给shellcode  赋值数组，保存 成 chrome.html"></a>2.4复制出来 放入 POC 中 第7行 给shellcode  赋值数组，保存 成 chrome.html</h3><p><img src="/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/4.png">  </p>
+<h3 id="2-5执行以下命令，关闭沙箱并打开谷歌浏览器"><a href="#2-5执行以下命令，关闭沙箱并打开谷歌浏览器" class="headerlink" title="2.5执行以下命令，关闭沙箱并打开谷歌浏览器"></a>2.5执行以下命令，关闭沙箱并打开谷歌浏览器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd C:\\Program Files\\Google\\Chrome\\Application\\</span><br><span class="line">chrome.exe \-no-sandbox</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/5.png">  </p>
+<h3 id="2-6然后双击打开chrome-html，cs成功上线"><a href="#2-6然后双击打开chrome-html，cs成功上线" class="headerlink" title="2.6然后双击打开chrome.html，cs成功上线"></a>2.6然后双击打开chrome.html，cs成功上线</h3><p><img src="/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/6.png">   </p>
+<h2 id="注：本实验不得用于商业用途-仅做学习交流，如用作他途造成的一切后果请自行承担"><a href="#注：本实验不得用于商业用途-仅做学习交流，如用作他途造成的一切后果请自行承担" class="headerlink" title="注：本实验不得用于商业用途,仅做学习交流，如用作他途造成的一切后果请自行承担!"></a>注：本实验不得用于商业用途,仅做学习交流，如用作他途造成的一切后果请自行承担!</h2>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/AeolusTF">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chrome-0day-ShellCode-%E4%BC%A0%E9%80%81%E9%97%A8"><span class="toc-number">1.</span> <span class="toc-text">Chrome-0day ShellCode 传送门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chrome-0day-%E6%BC%8F%E6%B4%9E%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">Chrome-0day 漏洞介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4"><span class="toc-number">3.</span> <span class="toc-text">影响范围</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF-Cobalt-Strike"><span class="toc-number">4.</span> <span class="toc-text">利用 Chrome-0day 上线 Cobalt Strike</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%A6%96%E5%85%88%E5%B0%9D%E8%AF%95%E5%BC%B9%E5%87%BA%E8%AE%B0%E4%BA%8B%E6%9C%AC%EF%BC%8C%E6%88%90%E5%8A%9F%E8%AF%B4%E6%98%8E%E5%AD%98%E5%9C%A8%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">1.首先尝试弹出记事本，成功说明存在漏洞利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-CS%E5%BC%80%E5%90%AF%E7%9B%91%E5%90%AC"><span class="toc-number">6.</span> <span class="toc-text">2.CS开启监听</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1%E7%94%9F%E6%88%90pyload%EF%BC%8Chttps%E7%9A%84%E7%A8%B3%E5%AE%9A%EF%BC%8C%E5%8B%BE%E9%80%89x64"><span class="toc-number">6.1.</span> <span class="toc-text">2.1生成pyload，https的稳定，勾选x64</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2%E7%94%9F%E6%88%90%E4%B9%8B%E5%90%8E%E8%8E%B7%E5%BE%97pyload-c"><span class="toc-number">6.2.</span> <span class="toc-text">2.2生成之后获得pyload.c</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3%E5%B0%86shellcode%E7%9A%84-%E5%85%A8%E9%83%A8%E6%9B%BF%E6%8D%A2%E4%B8%BA-0-%E7%84%B6%E5%90%8E%E5%8F%96%E5%87%BA%E6%9D%A5shellcode-%E6%94%BE%E5%85%A5-chrome-0day-%E4%B8%AD"><span class="toc-number">6.3.</span> <span class="toc-text">2.3将shellcode的&#96;\&#96;全部替换为&#96;,0&#96;然后取出来shellcode  放入 chrome 0day 中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4%E5%A4%8D%E5%88%B6%E5%87%BA%E6%9D%A5-%E6%94%BE%E5%85%A5-POC-%E4%B8%AD-%E7%AC%AC7%E8%A1%8C-%E7%BB%99shellcode-%E8%B5%8B%E5%80%BC%E6%95%B0%E7%BB%84%EF%BC%8C%E4%BF%9D%E5%AD%98-%E6%88%90-chrome-html"><span class="toc-number">6.4.</span> <span class="toc-text">2.4复制出来 放入 POC 中 第7行 给shellcode  赋值数组，保存 成 chrome.html</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5%E6%89%A7%E8%A1%8C%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%EF%BC%8C%E5%85%B3%E9%97%AD%E6%B2%99%E7%AE%B1%E5%B9%B6%E6%89%93%E5%BC%80%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="toc-number">6.5.</span> <span class="toc-text">2.5执行以下命令，关闭沙箱并打开谷歌浏览器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6%E7%84%B6%E5%90%8E%E5%8F%8C%E5%87%BB%E6%89%93%E5%BC%80chrome-html%EF%BC%8Ccs%E6%88%90%E5%8A%9F%E4%B8%8A%E7%BA%BF"><span class="toc-number">6.6.</span> <span class="toc-text">2.6然后双击打开chrome.html，cs成功上线</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%EF%BC%9A%E6%9C%AC%E5%AE%9E%E9%AA%8C%E4%B8%8D%E5%BE%97%E7%94%A8%E4%BA%8E%E5%95%86%E4%B8%9A%E7%94%A8%E9%80%94-%E4%BB%85%E5%81%9A%E5%AD%A6%E4%B9%A0%E4%BA%A4%E6%B5%81%EF%BC%8C%E5%A6%82%E7%94%A8%E4%BD%9C%E4%BB%96%E9%80%94%E9%80%A0%E6%88%90%E7%9A%84%E4%B8%80%E5%88%87%E5%90%8E%E6%9E%9C%E8%AF%B7%E8%87%AA%E8%A1%8C%E6%89%BF%E6%8B%85"><span class="toc-number">7.</span> <span class="toc-text">注：本实验不得用于商业用途,仅做学习交流，如用作他途造成的一切后果请自行承担!</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&text=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&title=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&is_video=false&description=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cobalt Strike 利用 Chrome-0day 上线&body=Check out this article: http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&title=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&title=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&title=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&title=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&name=Cobalt Strike 利用 Chrome-0day 上线&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aeolustf.github.io/2021/05/09/Cobalt-Strike-%E5%88%A9%E7%94%A8-Chrome-0day-%E4%B8%8A%E7%BA%BF/&t=Cobalt Strike 利用 Chrome-0day 上线"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    Ae0lu5
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/AeolusTF">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
